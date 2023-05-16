@@ -1,27 +1,60 @@
 // In App.js in a new project
 
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-function LoginScreen(props) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+function BoldText(props) {
+  console.log("props", props);
+  const onPressFunction = () => {
+    props.onPress("This is coming from BoldText");
   };
+  return (
+    <Pressable onPress={onPressFunction}>
+      <Text
+        style={{
+          fontSize: 16,
+          color: "tomato",
+        }}
+      >
+        {props.title}
+      </Text>
+    </Pressable>
+  );
+}
+
+function LoginScreen(props) {
+  let [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  //
+  const handleLogin = () => {
+    if (username === "test" && password === "test") {
+      props.navigation.navigate("Home");
+    } else {
+      alert("Username or password is invalid");
+    }
+  };
+
+  function onTextChangeUsername(updateText) {
+    console.log("entered text : ", updateText);
+    // username = updateText;
+    setUsername(updateText);
+  }
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Login Screen</Text>
+      <BoldText
+        title={"Print Amber"}
+        onPress={(text) => {
+          console.log("The text was pressed", text);
+        }}
+      />
+      <BoldText title={"Please log in"} />
       <TextInput
         placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        // value={username}
+        onChangeText={onTextChangeUsername}
         style={{
           marginBottom: 10,
           padding: 10,
@@ -46,9 +79,10 @@ function LoginScreen(props) {
       <Button
         title="Login"
         onPress={() => {
-          props.navigation.navigate("Home");
+          handleLogin();
         }}
       />
+      <Text>User have entered : {username}</Text>
     </View>
   );
 }
