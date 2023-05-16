@@ -25,36 +25,44 @@ function BoldText(props) {
 }
 
 function LoginScreen(props) {
+  const [name, setName] = useState("");
   let [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   //
   const handleLogin = () => {
     if (username === "test" && password === "test") {
-      props.navigation.navigate("Home");
+      props.navigation.navigate("Home", { name: name });
     } else {
       alert("Username or password is invalid");
     }
   };
 
-  function onTextChangeUsername(updateText) {
-    console.log("entered text : ", updateText);
-    // username = updateText;
-    setUsername(updateText);
-  }
-
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <BoldText
-        title={"Print Amber"}
+        title={"Hello!"}
         onPress={(text) => {
           console.log("The text was pressed", text);
         }}
       />
       <BoldText title={"Please log in"} />
       <TextInput
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+        style={{
+          marginBottom: 10,
+          padding: 10,
+          borderWidth: 1,
+          borderColor: "gray",
+          width: 200,
+        }}
+      />
+
+      <TextInput
         placeholder="Username"
-        // value={username}
-        onChangeText={onTextChangeUsername}
+        value={username}
+        onChangeText={setUsername}
         style={{
           marginBottom: 10,
           padding: 10,
@@ -82,15 +90,16 @@ function LoginScreen(props) {
           handleLogin();
         }}
       />
-      <Text>User have entered : {username}</Text>
     </View>
   );
 }
 
 function HomeScreen(props) {
+  const { name } = props.route.params;
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
+      <Text>Welcome, {name}!</Text>
       <Button
         title="Go to Feed"
         onPress={() => {
