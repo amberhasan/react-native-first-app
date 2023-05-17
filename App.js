@@ -94,8 +94,8 @@ function LoginScreen(props) {
   );
 }
 
-function HomeScreen(props) {
-  const { name } = props.route.params;
+function HomeScreen({ route, navigation }) {
+  const { name } = route.params;
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -103,19 +103,19 @@ function HomeScreen(props) {
       <Button
         title="Go to Feed"
         onPress={() => {
-          props.navigation.navigate("Feed");
+          navigation.navigate("Feed");
         }}
       />
       <Button
         title="Go to Blog"
         onPress={() => {
-          props.navigation.navigate("Blog");
+          navigation.navigate("Blog");
         }}
       />
       <Button
         title="Go to Extra"
         onPress={() => {
-          props.navigation.navigate("Extra");
+          navigation.navigate("Extra");
         }}
       />
     </View>
